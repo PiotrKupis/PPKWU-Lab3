@@ -2,6 +2,8 @@ package com.example.api;
 
 import org.json.JSONObject;
 import org.json.XML;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,6 +28,16 @@ public class ApiController {
                     restTemplate.getForObject(API + text, String.class));
                 String xml = XML.toString(jsoObject);
                 return "<analyze>" + xml + "</analyze>";
+            case "CSV":
+                Response response = restTemplate.exchange(API + text, HttpMethod.GET,
+                    HttpEntity.EMPTY,
+                    Response.class).getBody();
+                return "uppercase,lowercase,number,specialChars,combination"
+                    + response.getUppercase() + ","
+                    + response.getLowercase() + ","
+                    + response.getNumbers() + ","
+                    + response.getSpecialChars() + ","
+                    + response.getCombination();
             default:
                 return "Incorrect format";
         }
