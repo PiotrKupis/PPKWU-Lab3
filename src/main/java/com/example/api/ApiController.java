@@ -19,13 +19,11 @@ public class ApiController {
         @PathVariable("format") String format) {
 
         RestTemplate restTemplate = new RestTemplate();
-
         switch (format) {
             case "JSON":
-                return restTemplate.getForObject(API + text, String.class);
+                return getJson(text, restTemplate);
             case "XML":
-                JSONObject jsoObject = new JSONObject(
-                    restTemplate.getForObject(API + text, String.class));
+                JSONObject jsoObject = new JSONObject(getJson(text, restTemplate));
                 String xml = XML.toString(jsoObject);
                 return "<analyze>" + xml + "</analyze>";
             case "CSV":
@@ -43,4 +41,7 @@ public class ApiController {
         }
     }
 
+    private String getJson(String text, RestTemplate restTemplate) {
+        return restTemplate.getForObject(API + text, String.class);
+    }
 }
