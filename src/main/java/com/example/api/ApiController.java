@@ -30,7 +30,7 @@ public class ApiController {
                 Response response = restTemplate.exchange(API + text, HttpMethod.GET,
                     HttpEntity.EMPTY,
                     Response.class).getBody();
-                return "uppercase,lowercase,number,specialChars,combination"
+                return "uppercase,lowercase,number,specialChars,combination\n"
                     + response.getUppercase() + ","
                     + response.getLowercase() + ","
                     + response.getNumbers() + ","
