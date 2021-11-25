@@ -18,6 +18,7 @@ public class ApiController {
     public String analyze(@PathVariable("text") String text,
         @PathVariable("format") String format) {
 
+        Response response;
         RestTemplate restTemplate = new RestTemplate();
         switch (format) {
             case "JSON":
@@ -27,7 +28,7 @@ public class ApiController {
                 String xml = XML.toString(jsoObject);
                 return "<analyze>" + xml + "</analyze>";
             case "CSV":
-                Response response = restTemplate.exchange(API + text, HttpMethod.GET,
+                response = restTemplate.exchange(API + text, HttpMethod.GET,
                     HttpEntity.EMPTY,
                     Response.class).getBody();
                 return "uppercase,lowercase,number,specialChars,combination\n"
@@ -36,6 +37,16 @@ public class ApiController {
                     + response.getNumbers() + ","
                     + response.getSpecialChars() + ","
                     + response.getCombination();
+            case "TXT":
+                response = restTemplate.exchange(API + text, HttpMethod.GET,
+                    HttpEntity.EMPTY, Response.class).getBody();
+                StringBuilder responseTxt = new StringBuilder();
+                responseTxt.append(response.getUppercase()).append("\n");
+                responseTxt.append(response.getLowercase()).append("\n");
+                responseTxt.append(response.getNumbers()).append("\n");
+                responseTxt.append(response.getSpecialChars()).append("\n");
+                responseTxt.append(response.getCombination()).append("\n");
+                return responseTxt.toString();
             default:
                 return "Incorrect format";
         }
