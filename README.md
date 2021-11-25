@@ -5,11 +5,11 @@ Project responsible for performing operation on passed string and formating resp
 ENDPOINT
 
 Description: endpoint responsible for getting information about number of uppercase, lowercase, numbers, special characters and if contains its combination in passed string. 
-Additionally it allows to indicate type of response (JSON, XML, CSV)  <br/><br/>
+Additionally it allows to indicate type of response (JSON, XML, CSV, TXT)  <br/><br/>
 Path: analyze/{text}/{format} (GET)  
 Params:  
 &emsp;{text} - passed string  
-&emsp;{format} - response format (JSON, XML, CSV)  
+&emsp;{format} - response format (JSON, XML, CSV, TXT)  
 Return: object with data about passed string in passed format  
 Error message on passing incorrect format: Incorrect format
 
@@ -50,4 +50,17 @@ Response:
 ```
 uppercase,lowercase,number,specialChars,combination
 2,2,2,2,true
+```
+
+input for TXT reponse:  
+/analyze/aaAA12@$/TXT  
+
+Response:  
+```
+2
+2
+2
+2
+true
+
 ```
